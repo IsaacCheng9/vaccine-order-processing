@@ -2,12 +2,12 @@
 #include <string>
 using namespace std;
 
-class EndOfDayRecord
+class EndOfDay
 {
     char record_type = 'E';
     /* The date for which this is the end of the day, in the format YYYYMMDD. */
     int end_of_day;
 
 public:
-    EndOfDayRecord(int end_of_day);
+    EndOfDay(int end_of_day);
 };

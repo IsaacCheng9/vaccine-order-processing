@@ -1,8 +1,8 @@
 #include <fstream>
 #include <iomanip>
-#include "new_customer_record.cpp"
-#include "sales_order_record.cpp"
-#include "end_of_day_record.cpp"
+#include "customer_record.cpp"
+#include "sales_order.cpp"
+#include "end_of_day.cpp"
 
 void read_input_file(string filename)
 {
@@ -11,7 +11,6 @@ void read_input_file(string filename)
 
 int main(int argc, char **argv)
 {
-    string input_file_name;
     /* Checks that an input file has been provided as an argument. */
     if (argc != 2)
     {

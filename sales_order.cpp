@@ -1,6 +1,6 @@
-#include "sales_order_record.hpp"
+#include "sales_order.hpp"
 
-SalesOrderRecord::SalesOrderRecord(int order_date_input, char order_type_input,
+SalesOrder::SalesOrder(int order_date_input, char order_type_input,
                                    int order_customer_number_input,
                                    int order_quantity_input)
 {

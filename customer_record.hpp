@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-class NewCustomerRecord
+class CustomerRecord
 {
     char record_type = 'C';
     /* A four digit, zero-padded integer. */
@@ -10,5 +10,5 @@ class NewCustomerRecord
     string customer_name;
 
 public:
-    NewCustomerRecord(int customer_number_input, string customer_name_input);
+    CustomerRecord(int customer_number_input, string customer_name_input);
 };
