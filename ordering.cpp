@@ -14,6 +14,34 @@ void validate_parameters(int num_args)
     }
 }
 
+bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer_record)
+{
+    for (Customer *customer : customer_record)
+    {
+        if (customer->get_customer_number() == new_sales_order->get_order_customer_number())
+        {
+            customer->set_date(new_sales_order->get_order_date());
+
+            /* Sets order type name according to whether 'N' or 'E' was
+            provided. */
+            string order_type_name;
+            if (new_sales_order->get_order_type() == 'N')
+            {
+                order_type_name = "normal";
+            }
+            else if (new_sales_order->get_order_type() == 'X')
+            {
+                order_type_name = "EXPRESS";
+            }
+
+            cout << "OP: customer " << setfill('0') << setw(4) << new_sales_order->get_order_customer_number() << ": " << order_type_name << " order: quantity " << setfill('0') << setw(3) << new_sales_order->get_order_quantity() << endl;
+
+            return true;
+        }
+    }
+    return false;
+}
+
 void process_input_file(string file_name, vector<Customer *> &customer_record)
 {
     string line;
@@ -40,30 +68,21 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
             Customer *new_customer = new Customer(line);
             customer_record.push_back(new_customer);
 
-            cout << "OP: customer " << setfill('0') << setw(4) <<
-            new_customer->get_customer_number() << " added" << endl;;
+            cout << "OP: customer " << setfill('0') << setw(4) << new_customer->get_customer_number() << " added" << endl;
         }
+
         /* Processes a sales order. */
         else if (line[0] == 'S')
         {
-            SalesOrder *new_sales_order = new SalesOrder(line); 
+            SalesOrder *new_sales_order = new SalesOrder(line);
 
-            /* Sets order type name according to whether 'N' or 'E' was provided. */
-            string order_type_name;
-            if (new_sales_order->get_order_type() == 'N')
+            if (!process_new_order(new_sales_order, customer_record))
             {
-                order_type_name = "normal";
+                cerr << "There was an order in an invalid format!" << endl;
+                exit(EXIT_FAILURE);
             }
-            else if (new_sales_order->get_order_type() == 'X')
-            {
-                order_type_name = "EXPRESS";
-            }
-
-            cout << "OP: customer " << setfill('0') << setw(4) <<
-            new_sales_order->get_order_customer_number() << ": " <<
-            order_type_name << " order: quantity " << setfill('0') << setw(3) <<
-            new_sales_order->get_order_quantity() << endl;
         }
+
         /* Processes an end-of-day record. */
         else if (line[0] == 'E')
         {
@@ -77,7 +96,7 @@ int main(int argc, char **argv)
 {
     validate_parameters(argc);
     vector<Customer *> customer_record;
-    process_input_file(argv[1]);
+    process_input_file(argv[1], customer_record);
 
     return EXIT_SUCCESS;
 }
