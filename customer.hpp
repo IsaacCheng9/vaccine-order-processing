@@ -11,9 +11,12 @@ class Customer
     /* A four digit, zero-padded integer. */
     int customer_number;
     string customer_name;
+    int customer_order_quantity;
+    int invoice_number;
+    int date;
 
 public:
-    Customer(int customer_number_input, string customer_name_input);
+    Customer(string);
 };
 
 #endif
