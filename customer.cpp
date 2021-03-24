@@ -23,3 +23,8 @@ int Customer::get_customer_order_quantity()
 {
     return this->customer_order_quantity;
 }
+
+void Customer::set_date(int date)
+{
+    this->date = date;
+}
