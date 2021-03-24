@@ -19,6 +19,10 @@ class SalesOrder
 
 public:
     SalesOrder(string);
+    int get_order_date();
+    char get_order_type();
+    int get_order_customer_number();
+    int get_order_quantity();
 };
 
 #endif
