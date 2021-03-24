@@ -1,8 +1,11 @@
+#ifndef CUSTOMER_HPP
+#define CUSTOMER_HPP
+
 #include <iostream>
 #include <string>
 using namespace std;
 
-class CustomerRecord
+class Customer
 {
     char record_type = 'C';
     /* A four digit, zero-padded integer. */
@@ -10,5 +13,7 @@ class CustomerRecord
     string customer_name;
 
 public:
-    CustomerRecord(int customer_number_input, string customer_name_input);
+    Customer(int customer_number_input, string customer_name_input);
 };
+
+#endif
