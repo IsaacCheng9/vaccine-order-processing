@@ -24,12 +24,36 @@ void read_input_file(string file_name)
     /* Gets each line in the file. */
     while (getline(file, line))
     {
+        /* Processes a new customer record. */
         if (line[0] == 'C')
         {
-            string temp = line.substr(1, 4);
-            int customer_number_input = stoi(temp);
+            string temp_customer_number = line.substr(1, 4);
+            int customer_number_input = stoi(temp_customer_number);
             string customer_name_input;
+
             Customer c1(customer_number_input, customer_name_input);
+        }
+        /* Processes a sales order. */
+        else if (line[0] == 'S')
+        {
+            string temp_order_date = line.substr(1, 8);
+            string temp_order_customer_number = line.substr(10, 4);
+            string temp_order_quantity = line.substr(14, 3);
+            int order_date_input = stoi(temp_order_date);
+            char order_type_input = line[9];
+            int order_customer_number_input = stoi(temp_order_customer_number);
+            int order_quantity_input = stoi(temp_order_quantity);
+
+            SalesOrder s1(order_date_input, order_type_input,
+                          order_customer_number_input, order_quantity_input);
+        }
+        /* Processes an end-of-day record. */
+        else if (line[0] == 'E')
+        {
+            string temp_end_of_day = line.substr(1, 8);
+            int end_of_day = stoi(temp_end_of_day);
+
+            EndOfDay e1(end_of_day);
         }
     }
 }
