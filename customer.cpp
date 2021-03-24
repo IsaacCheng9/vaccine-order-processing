@@ -13,3 +13,13 @@ Customer::Customer(string input_line)
     this->customer_order_quantity = 0;
     this->date = 0;
 }
+
+int Customer::get_customer_number()
+{
+    return this->customer_number;
+}
+
+int Customer::get_customer_order_quantity()
+{
+    return this->customer_order_quantity;
+}

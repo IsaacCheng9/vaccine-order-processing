@@ -17,6 +17,8 @@ class Customer
 
 public:
     Customer(string);
+    int get_customer_number();
+    int get_customer_order_quantity();
 };
 
 #endif
