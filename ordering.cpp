@@ -14,18 +14,6 @@ void validate_parameters(int num_args)
     }
 }
 
-void ship_pending_orders(vector <Customer *> &customer_record)
-{
-    /* Processes customers who have made an order. */
-    for (Customer *customer : customer_record)
-    {
-        if (customer->get_customer_order_quantity() > 0)
-        {
-            customer->ship_order();
-        }
-    }
-}
-
 bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer_record)
 {
     for (Customer *customer : customer_record)
@@ -47,7 +35,10 @@ bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer
                 order_type_name = "EXPRESS";
             }
 
-            cout << "OP: customer " << setfill('0') << setw(4) << new_sales_order->get_order_customer_number() << ": " << order_type_name << " order: quantity " << setfill('0') << setw(3) << new_sales_order->get_order_quantity() << endl;
+            cout << "OP: customer " << setfill('0') << setw(4)
+                 << new_sales_order->get_order_customer_number() << ": "
+                 << order_type_name << " order: quantity " << setfill('0')
+                 << setw(3) << new_sales_order->get_order_quantity() << endl;
 
             return true;
         }
@@ -55,12 +46,25 @@ bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer
     return false;
 }
 
+void ship_pending_orders(vector <Customer *> &customer_record)
+{
+    /* Processes customers who have made an order. */
+    for (Customer *customer : customer_record)
+    {
+        if (customer->get_customer_order_quantity() > 0)
+        {
+            customer->ship_order();
+        }
+    }
+}
+
+
 void process_input_file(string file_name, vector<Customer *> &customer_record)
 {
     string line;
     ifstream file;
     /* Throws an exception when EOF is reached. */
-    file.exceptions(ifstream::eofbit);
+    // TODO: Check if exception is required. file.exceptions(ifstream::eofbit);
 
     /* Opens the input file. */
     try
@@ -81,7 +85,8 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
             Customer *new_customer = new Customer(line);
             customer_record.push_back(new_customer);
 
-            cout << "OP: customer " << setfill('0') << setw(4) << new_customer->get_customer_number() << " added" << endl;
+            cout << "OP: customer " << setfill('0') << setw(4)
+                 << new_customer->get_customer_number() << " added" << endl;
         }
 
         /* Processes a sales order. */
@@ -101,8 +106,11 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
         {
             string end_of_day = line.substr(1, 8);
             cout << "OP: end of day " << end_of_day << endl;
+            ship_pending_orders(customer_record);
         }
     }
+
+    file.close();
 }
 
 int main(int argc, char **argv)
