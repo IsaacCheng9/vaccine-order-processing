@@ -1,3 +1,6 @@
+#ifndef END_OF_DAY_HPP
+#define END_OF_DAY_HPP
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -11,3 +14,5 @@ class EndOfDay
 public:
     EndOfDay(int end_of_day);
 };
+
+#endif

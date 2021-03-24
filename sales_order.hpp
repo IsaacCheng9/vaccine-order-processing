@@ -1,3 +1,6 @@
+#ifndef SALES_ORDER_HPP
+#define SALES_ORDER_HPP
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -18,3 +21,5 @@ public:
     SalesOrder(int order_date_input, char order_type_input,
                      int order_customer_number_input, int order_quantity_input);
 };
+
+#endif
