@@ -2,7 +2,6 @@
 #include <iomanip>
 #include "customer.cpp"
 #include "sales_order.cpp"
-#include "end_of_day.cpp"
 
 void validate_parameters(int num_args)
 {
