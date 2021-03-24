@@ -1,5 +1,5 @@
-#ifndef CUSTOMER_HPP
-#define CUSTOMER_HPP
+#ifndef __CUSTOMER_HPP
+#define __CUSTOMER_HPP
 
 #include <iomanip>
 #include <iostream>
@@ -8,7 +8,6 @@ using namespace std;
 
 class Customer
 {
-    char record_type = 'C';
     /* A four digit, zero-padded integer. */
     int customer_number;
     string customer_name;

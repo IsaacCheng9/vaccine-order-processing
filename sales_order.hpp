@@ -1,5 +1,5 @@
-#ifndef SALES_ORDER_HPP
-#define SALES_ORDER_HPP
+#ifndef __SALES_ORDER_HPP
+#define __SALES_ORDER_HPP
 
 #include <iomanip>
 #include <iostream>
@@ -8,7 +8,6 @@ using namespace std;
 
 class SalesOrder
 {
-    char record_type = 'S';
     /* In the format YYYYMMDD. */
     int order_date;
     /* 'N' for a normal order, 'X' for an express order. */
