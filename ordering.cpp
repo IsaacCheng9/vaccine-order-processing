@@ -1,6 +1,6 @@
 #include <fstream>
 #include <iomanip>
-#include "customer_record.cpp"
+#include "customer.cpp"
 #include "sales_order.cpp"
 #include "end_of_day.cpp"
 
