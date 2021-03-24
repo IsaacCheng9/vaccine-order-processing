@@ -39,33 +39,30 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
         {
             Customer *new_customer = new Customer(line);
             customer_record.push_back(new_customer);
-            
+
             cout << "OP: customer " << setfill('0') << setw(4) <<
             new_customer->get_customer_number() << " added" << endl;;
         }
         /* Processes a sales order. */
         else if (line[0] == 'S')
         {
-            string order_date_input = line.substr(1, 8);
-            char order_type_input = line[9];
-            string order_customer_number_input = line.substr(10, 4);
-            string order_quantity_input = line.substr(14, 3);
+            SalesOrder *new_sales_order = new SalesOrder(line); 
 
             /* Sets order type name according to whether 'N' or 'E' was provided. */
             string order_type_name;
-            if (order_type_input == 'N')
+            if (new_sales_order->get_order_type() == 'N')
             {
                 order_type_name = "normal";
             }
-            else if (order_type_input == 'X')
+            else if (new_sales_order->get_order_type() == 'X')
             {
                 order_type_name = "EXPRESS";
             }
 
             cout << "OP: customer " << setfill('0') << setw(4) <<
-            order_customer_number_input << ": " << order_type_name <<
-            " order: quantity " << setfill('0') << setw(3) <<
-            order_quantity_input << endl;
+            new_sales_order->get_order_customer_number() << ": " <<
+            order_type_name << " order: quantity " << setfill('0') << setw(3) <<
+            new_sales_order->get_order_quantity() << endl;
         }
         /* Processes an end-of-day record. */
         else if (line[0] == 'E')
