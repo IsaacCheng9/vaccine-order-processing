@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iomanip>
+#include <vector>
 #include "customer.cpp"
 #include "sales_order.cpp"
 
@@ -13,7 +14,7 @@ void validate_parameters(int num_args)
     }
 }
 
-void process_input_file(string file_name)
+void process_input_file(string file_name, vector<Customer *> &customer_record)
 {
     string line;
     ifstream file;
@@ -36,12 +37,11 @@ void process_input_file(string file_name)
         /* Processes a new customer record. */
         if (line[0] == 'C')
         {
-            string temp_customer_number = line.substr(1, 4);
-            int customer_number_input = stoi(temp_customer_number);
-            string customer_name_input;
-
+            Customer *new_customer = new Customer(line);
+            customer_record.push_back(new_customer);
+            
             cout << "OP: customer " << setfill('0') << setw(4) <<
-            customer_number_input << " added" << endl;;
+            new_customer->get_customer_number() << " added" << endl;;
         }
         /* Processes a sales order. */
         else if (line[0] == 'S')
@@ -79,6 +79,7 @@ void process_input_file(string file_name)
 int main(int argc, char **argv)
 {
     validate_parameters(argc);
+    vector<Customer *> customer_record;
     process_input_file(argv[1]);
 
     return EXIT_SUCCESS;
