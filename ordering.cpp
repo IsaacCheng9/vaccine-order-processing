@@ -1,10 +1,7 @@
-#include <cstring>
-#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <string>
-#include <typeinfo>
 using namespace std;
 
 class NewCustomerRecord
@@ -17,12 +14,6 @@ class NewCustomerRecord
 public:
     NewCustomerRecord(int customer_number_input, string customer_name_input);
 };
-
-NewCustomerRecord::NewCustomerRecord(int customer_number_input,
-                                     string customer_name_input)
-{
-    cout << "OP: customer " << customer_number_input << "added";
-}
 
 class SalesOrderRecord
 {
@@ -41,6 +32,22 @@ public:
                      int order_customer_number_input, int order_quantity_input);
 };
 
+class EndOfDayRecord
+{
+    char record_type = 'E';
+    /* The date for which this is the end of the day, in the format YYYYMMDD. */
+    int end_of_day;
+
+public:
+    EndOfDayRecord(int end_of_day);
+};
+
+NewCustomerRecord::NewCustomerRecord(int customer_number_input,
+                                     string customer_name_input)
+{
+    cout << "OP: customer " << customer_number_input << "added";
+}
+
 SalesOrderRecord::SalesOrderRecord(int order_date_input, char order_type_input,
                                    int order_customer_number_input,
                                    int order_quantity_input)
@@ -56,16 +63,13 @@ SalesOrderRecord::SalesOrderRecord(int order_date_input, char order_type_input,
         order_type_name = "EXPRESS";
     }
 
-    cout << "OP: customer " << order_customer_number_input << ": " <<
-    order_type_name << " order: quantity " << order_quantity_input;
+    cout << "OP: customer " << order_customer_number_input << ": " << order_type_name << " order: quantity " << order_quantity_input;
 }
 
-class EndOfDayRecord
+EndOfDayRecord::EndOfDayRecord(int end_of_day)
 {
-    char record_type = 'E';
-    /* The date for which this is the end of the day, in the format YYYYMMDD. */
-    int end_of_day;
-};
+    cout << "OP: end of day " << end_of_day << endl;
+}
 
 void read_input_file(string filename)
 {
@@ -74,6 +78,7 @@ void read_input_file(string filename)
 
 int main(int argc, char **argv)
 {
+    string input_file_name;
     /* Checks that an input file has been provided as an argument. */
     if (argc != 2)
     {
@@ -81,7 +86,7 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    read_input_file("orderFile.txt");
+    read_input_file(argv[1]);
 
     return EXIT_SUCCESS;
 }
