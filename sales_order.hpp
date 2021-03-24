@@ -1,6 +1,7 @@
 #ifndef SALES_ORDER_HPP
 #define SALES_ORDER_HPP
 
+#include <iomanip>
 #include <iostream>
 #include <string>
 using namespace std;
