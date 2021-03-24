@@ -6,7 +6,7 @@
 
 void read_input_file(string file_name)
 {
-    string buffer;
+    string line;
     ifstream file;
     /* Throws an exception when EOF is reached. */
     file.exceptions(ifstream::eofbit);
@@ -22,9 +22,15 @@ void read_input_file(string file_name)
     }
 
     /* Gets each line in the file. */
-    while (getline(file, buffer))
+    while (getline(file, line))
     {
-        cout << buffer << endl;
+        if (line[0] == 'C')
+        {
+            string temp = line.substr(1, 4);
+            int customer_number_input = stoi(temp);
+            string customer_name_input;
+            Customer c1(customer_number_input, customer_name_input);
+        }
     }
 }
 
