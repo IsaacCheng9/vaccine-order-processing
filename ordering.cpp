@@ -4,6 +4,16 @@
 #include "sales_order.cpp"
 #include "end_of_day.cpp"
 
+void validate_parameters(int num_args)
+{
+    /* Checks that an input file has been provided as an argument. */
+    if (num_args != 2)
+    {
+        cerr << "No input file has been provided!" << endl;
+        exit(EXIT_FAILURE);
+    }
+}
+
 void read_input_file(string file_name)
 {
     string line;
@@ -60,13 +70,7 @@ void read_input_file(string file_name)
 
 int main(int argc, char **argv)
 {
-    /* Checks that an input file has been provided as an argument. */
-    if (argc != 2)
-    {
-        cerr << "No input file has been provided!" << endl;
-        exit(EXIT_FAILURE);
-    }
-
+    validate_parameters(argc);
     read_input_file(argv[1]);
 
     return EXIT_SUCCESS;
