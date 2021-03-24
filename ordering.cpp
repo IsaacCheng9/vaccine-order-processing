@@ -14,6 +14,18 @@ void validate_parameters(int num_args)
     }
 }
 
+void ship_pending_orders(vector <Customer *> &customer_record)
+{
+    /* Processes customers who have made an order. */
+    for (Customer *customer : customer_record)
+    {
+        if (customer->get_customer_order_quantity() > 0)
+        {
+            customer->ship_order();
+        }
+    }
+}
+
 bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer_record)
 {
     for (Customer *customer : customer_record)
@@ -28,6 +40,7 @@ bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer
             if (new_sales_order->get_order_type() == 'N')
             {
                 order_type_name = "normal";
+                customer->ship_order();
             }
             else if (new_sales_order->get_order_type() == 'X')
             {
