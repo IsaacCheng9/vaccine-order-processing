@@ -1,18 +1,22 @@
 #include "ordering.hpp"
 
+/* Checks that only one argument has been provided; the input file. */
 void validate_parameters(int num_args)
 {
-    /* Checks that an input file has been provided as an argument. */
     if (num_args != 2)
     {
-        cerr << "No input file has been provided!" << endl;
+        cerr << "There must only be one argument provided; the name of the "
+                "input file!" << endl;
         exit(EXIT_FAILURE);
     }
 }
 
+/* Records the date and quantity of a new order, and processes it if the
+   customer number matches a customer on record. */
 bool process_new_order(SalesOrder *new_sales_order,
                        vector<Customer *> &customer_record)
 {
+    /* Whether the customer order must be shipped immediately or not. */
     bool is_express = false;
 
     for (Customer *customer : customer_record)
@@ -20,12 +24,13 @@ bool process_new_order(SalesOrder *new_sales_order,
         if (customer->get_customer_number() ==
             new_sales_order->get_order_customer_number())
         {
+            /* Sets the date of the order, and adds the quantity to the pending
+               sales order of the customer. */
             customer->set_date(new_sales_order->get_order_date());
-
             customer->add_quantity(new_sales_order);
 
-            /* Sets order type name according to whether 'N' or 'E' was
-            provided. */
+            /* Finds out whether the order was a normal or express order
+               according to the mark on the input. */
             string order_type_name;
             if (new_sales_order->get_order_type() == 'N')
             {
@@ -41,20 +46,22 @@ bool process_new_order(SalesOrder *new_sales_order,
                  << new_sales_order->get_order_customer_number() << ": "
                  << order_type_name << " order: quantity " << new_sales_order->get_order_quantity() << endl;
 
+            /* Express orders must be shipped immediately. */
             if (is_express)
             {
                 customer->ship_order();
             }
-
             return true;
         }
     }
+    /* Returns false when the customer number from the order doesn't match any
+       customer number from the customer records. */
     return false;
 }
 
+/* Processes customers who have made a normal order at the end of the day. */
 void ship_pending_orders(vector<Customer *> &customer_record)
 {
-    /* Processes customers who have made an order. */
     for (Customer *customer : customer_record)
     {
         if (customer->get_customer_order_quantity() > 0)
@@ -64,6 +71,7 @@ void ship_pending_orders(vector<Customer *> &customer_record)
     }
 }
 
+/* Reads the input file, and processes the instruction on each line. */
 void process_input_file(string file_name, vector<Customer *> &customer_record)
 {
     string line;
@@ -71,7 +79,7 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
     /* Throws an exception when EOF is reached. */
     // TODO: Check if exception is required. file.exceptions(ifstream::eofbit);
 
-    /* Opens the input file. */
+    /* Opens the input file, catching an error if it cannot open this. */
     try
     {
         file.open(file_name);
@@ -89,7 +97,6 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
         {
             Customer *new_customer = new Customer(line);
             customer_record.push_back(new_customer);
-
             cout << "OP: customer " << setfill('0') << setw(4)
                  << new_customer->get_customer_number() << " added" << endl;
         }
@@ -98,7 +105,6 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
         else if (line[0] == 'S')
         {
             SalesOrder *new_sales_order = new SalesOrder(line);
-
             if (!process_new_order(new_sales_order, customer_record))
             {
                 cerr << "There was an order in an invalid format!" << endl;
@@ -110,7 +116,7 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
             delete new_sales_order;
         }
 
-        /* Processes an end-of-day record. */
+        /* Ships pending customer orders from that day, as the day has ended. */
         else if (line[0] == 'E')
         {
             string end_of_day = line.substr(1, 8);
@@ -118,10 +124,10 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
             ship_pending_orders(customer_record);
         }
     }
-
     file.close();
 }
 
+/* Frees remaining allocated memory once the program has finished. */
 void free_allocated_memory(vector<Customer *> &customer_record)
 {
     for (Customer *customer : customer_record)
