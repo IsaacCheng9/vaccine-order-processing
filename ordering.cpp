@@ -76,8 +76,6 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
 {
     string line;
     ifstream file;
-    /* Throws an exception when EOF is reached. */
-    // TODO: Check if exception is required. file.exceptions(ifstream::eofbit);
 
     /* Opens the input file, catching an error if it cannot open this. */
     try
@@ -105,9 +103,12 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
         else if (line[0] == 'S')
         {
             SalesOrder *new_sales_order = new SalesOrder(line);
+
+            /* Throws an exception if the customer number cannot be matched. */
             if (!process_new_order(new_sales_order, customer_record))
             {
-                cerr << "There was an order in an invalid format!" << endl;
+                cerr << "The customer number in the order does not match a "
+                        "customer!" << endl;
                 exit(EXIT_FAILURE);
             }
 
