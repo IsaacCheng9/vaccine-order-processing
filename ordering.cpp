@@ -1,8 +1,4 @@
-#include <fstream>
-#include <iomanip>
-#include <vector>
-#include "customer.cpp"
-#include "sales_order.cpp"
+#include "ordering.hpp"
 
 void validate_parameters(int num_args)
 {
@@ -14,13 +10,19 @@ void validate_parameters(int num_args)
     }
 }
 
-bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer_record)
+bool process_new_order(SalesOrder *new_sales_order,
+                       vector<Customer *> &customer_record)
 {
+    bool is_express = false;
+
     for (Customer *customer : customer_record)
     {
-        if (customer->get_customer_number() == new_sales_order->get_order_customer_number())
+        if (customer->get_customer_number() ==
+            new_sales_order->get_order_customer_number())
         {
             customer->set_date(new_sales_order->get_order_date());
+
+            customer->add_quantity(new_sales_order);
 
             /* Sets order type name according to whether 'N' or 'E' was
             provided. */
@@ -28,17 +30,21 @@ bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer
             if (new_sales_order->get_order_type() == 'N')
             {
                 order_type_name = "normal";
-                customer->ship_order();
             }
             else if (new_sales_order->get_order_type() == 'X')
             {
                 order_type_name = "EXPRESS";
+                is_express = true;
             }
 
             cout << "OP: customer " << setfill('0') << setw(4)
                  << new_sales_order->get_order_customer_number() << ": "
-                 << order_type_name << " order: quantity " << setfill('0')
-                 << setw(3) << new_sales_order->get_order_quantity() << endl;
+                 << order_type_name << " order: quantity " << new_sales_order->get_order_quantity() << endl;
+
+            if (is_express)
+            {
+                customer->ship_order();
+            }
 
             return true;
         }
@@ -46,7 +52,7 @@ bool process_new_order(SalesOrder *new_sales_order, vector<Customer *> &customer
     return false;
 }
 
-void ship_pending_orders(vector <Customer *> &customer_record)
+void ship_pending_orders(vector<Customer *> &customer_record)
 {
     /* Processes customers who have made an order. */
     for (Customer *customer : customer_record)
@@ -57,7 +63,6 @@ void ship_pending_orders(vector <Customer *> &customer_record)
         }
     }
 }
-
 
 void process_input_file(string file_name, vector<Customer *> &customer_record)
 {
@@ -99,6 +104,10 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
                 cerr << "There was an order in an invalid format!" << endl;
                 exit(EXIT_FAILURE);
             }
+
+            /* Free allocated memory for sales order, as it has been
+               processed. */
+            delete new_sales_order;
         }
 
         /* Processes an end-of-day record. */
@@ -113,11 +122,20 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
     file.close();
 }
 
+void free_allocated_memory(vector<Customer *> &customer_record)
+{
+    for (Customer *customer : customer_record)
+    {
+        delete customer;
+    }
+}
+
 int main(int argc, char **argv)
 {
     validate_parameters(argc);
     vector<Customer *> customer_record;
     process_input_file(argv[1], customer_record);
+    free_allocated_memory(customer_record);
 
     return EXIT_SUCCESS;
 }
