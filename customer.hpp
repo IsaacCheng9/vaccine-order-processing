@@ -14,6 +14,7 @@ class Customer
     string customer_name;
     int customer_order_quantity;
     int date;
+    /* Keeps track of the latest invoice number. */
     static int invoice_number;
 
 public:

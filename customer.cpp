@@ -1,15 +1,20 @@
 #include "customer.hpp"
 
+/* Sets the invoice number to start at 1000. */
 int Customer::invoice_number{1000};
 
 Customer::Customer(string input_line)
 {
+    /* Customer number is contained on columns 2-5, and customer name is
+       contained on columns 6-45. */
     this->customer_number = atoi(input_line.substr(1, 4).c_str());
-    this->customer_name = input_line.substr(5, 39);
+    this->customer_name = input_line.substr(5, 40);
     this->customer_order_quantity = 0;
     this->date = 0;
 }
 
+/* Ships the customer's order, and displays an invoice with the invoice number,
+   date, and quantity shipped. */
 void Customer::ship_order()
 {
     cout << "OP: customer " << setfill('0') << setw(4) << customer_number
@@ -20,6 +25,8 @@ void Customer::ship_order()
     this->customer_order_quantity = 0;
 }
 
+/* Adds the quantity of a new sales order to the customer's total pending
+   order quantity. */
 void Customer::add_quantity(SalesOrder *new_sales_order)
 {
     this->customer_order_quantity += new_sales_order->get_order_quantity();
