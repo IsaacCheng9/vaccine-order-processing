@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include "sales_order.hpp"
 using namespace std;
 
 class Customer
@@ -18,6 +19,7 @@ class Customer
 public:
     Customer(string);
     void ship_order();
+    void add_quantity(SalesOrder *);
     int get_customer_number();
     int get_customer_order_quantity();
     void set_date(int);

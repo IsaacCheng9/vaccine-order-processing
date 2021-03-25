@@ -14,10 +14,15 @@ void Customer::ship_order()
 {
     cout << "OP: customer " << setfill('0') << setw(4) << customer_number
          << ": shipped quantity " << customer_order_quantity << endl;
-    cout << "SC: customer " << customer_number << ": invoice "
-         << invoice_number++ << ": date " << date << ": quantity: "
-         << customer_order_quantity << endl;
+    cout << "SC: customer " << setfill('0') << setw(4) << customer_number
+         << ": invoice " << invoice_number++ << ": date " << date
+         << ": quantity: " << customer_order_quantity << endl;
     this->customer_order_quantity = 0;
+}
+
+void Customer::add_quantity(SalesOrder *new_sales_order)
+{
+    this->customer_order_quantity += new_sales_order->get_order_quantity();
 }
 
 int Customer::get_customer_number()
