@@ -2,3 +2,4 @@ g++ -std=c++11 -c ordering.cpp -I./ -o ordering.o
 g++ -std=c++11 -c customer.cpp -I./ -o customer.o
 g++ -std=c++11 -c sales_order.cpp -I./ -o sales_order.o
 g++ ordering.o customer.o sales_order.o -o ordering
+
