@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <iomanip>
+#include <string>
 #include <vector>
 // TODO: Change to include .hpp files instead.
 #include "customer.cpp"
