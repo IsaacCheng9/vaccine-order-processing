@@ -12,7 +12,7 @@ class Customer
     /* A four digit, zero-padded integer. */
     int customer_number;
     string customer_name;
-    int customer_order_quantity;
+    int customer_order_quantity = 0;
     int date;
     /* Keeps track of the latest invoice number. */
     static int invoice_number;

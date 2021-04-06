@@ -9,8 +9,6 @@ Customer::Customer(string input_line)
        contained on columns 6-45. */
     this->customer_number = atoi(input_line.substr(1, 4).c_str());
     this->customer_name = input_line.substr(5, 40);
-    this->customer_order_quantity = 0;
-    this->date = 0;
 }
 
 /* Ships the customer's order, and displays an invoice with the invoice number,
