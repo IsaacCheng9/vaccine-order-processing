@@ -1,7 +1,7 @@
 #include "customer.hpp"
 
 /* Sets the invoice number to start at 1000. */
-int Customer::invoice_number{1000};
+int Customer::invoice_number = 1000;
 
 Customer::Customer(string input_line)
 {
@@ -22,6 +22,8 @@ void Customer::ship_order()
     cout << "SC: customer " << setfill('0') << setw(4) << customer_number
          << ": invoice " << invoice_number++ << ": date " << date
          << ": quantity: " << customer_order_quantity << endl;
+
+    /* Resets the customer quantity, as current quantity has been shipped. */
     this->customer_order_quantity = 0;
 }
 
