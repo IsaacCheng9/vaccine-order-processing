@@ -1,14 +1,14 @@
 #include "customer.hpp"
 
-/* Sets the invoice number to start at 1000. */
+// Sets the invoice number to start at 1000.
 int Customer::invoice_number = 1000;
 
-/* Checks that the input line is valid for a new customer. */
+// Checks that the input line is valid for a new customer.
 void validate_input_customer(string input_line)
 {
     bool valid = true;
 
-    /* New customer input line has a maximum length of 45 characters. */
+    // New customer input line has a maximum length of 45 characters.
     if (input_line.length() > 45)
     {
         cerr << "An input line for a customer order should not contain more "
@@ -16,7 +16,6 @@ void validate_input_customer(string input_line)
              << endl;
         valid = false;
     }
-
     /* Customer number should be a number; checks that columns 2-5 only contain
        digits. */
     for (int i = 1; i <= 4; i++)
@@ -28,7 +27,7 @@ void validate_input_customer(string input_line)
         }
     }
 
-    /* Exits the program if the input file contains an invalid sales order. */
+    // Exits the program if the input file contains an invalid sales order.
     if (valid == false)
     {
         exit(EXIT_FAILURE);
@@ -38,7 +37,6 @@ void validate_input_customer(string input_line)
 Customer::Customer(string input_line)
 {
     validate_input_customer(input_line);
-
     /* Customer number is contained on columns 2-5, and customer name is
        contained on columns 6-45. */
     this->customer_number = atoi(input_line.substr(1, 4).c_str());
@@ -55,7 +53,7 @@ void Customer::ship_order()
          << ": invoice " << invoice_number++ << ": date " << date
          << ": quantity: " << customer_order_quantity << endl;
 
-    /* Resets the customer quantity, as current quantity has been shipped. */
+    // Resets the customer quantity, as current quantity has been shipped.
     this->customer_order_quantity = 0;
 }
 

@@ -5,9 +5,8 @@
 #include <iomanip>
 #include <set>
 #include <string>
-// TODO: Change to include .hpp files instead.
-#include "customer.cpp"
-#include "sales_order.cpp"
+#include "customer.hpp"
+#include "sales_order.hpp"
 using namespace std;
 
 void validate_parameters(int);

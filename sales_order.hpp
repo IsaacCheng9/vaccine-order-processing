@@ -10,13 +10,13 @@ void validate_input_customer(string);
 
 class SalesOrder
 {
-    /* In the format YYYYMMDD. */
+    // In the format YYYYMMDD.
     int order_date;
-    /* 'N' for a normal order, 'X' for an express order. */
+    // 'N' for a normal order, 'X' for an express order.
     char order_type;
-    /* Customer number of the customer raising the order. */
+    // Customer number of the customer raising the order.
     int order_customer_number;
-    /* A three-digit, zero-padded integer. */
+    // A three-digit, zero-padded integer.
     int order_quantity;
 
 public:

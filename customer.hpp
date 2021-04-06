@@ -11,12 +11,12 @@ void validate_input_customer(string);
 
 class Customer
 {
-    /* A four digit, zero-padded integer. */
+    // A four digit, zero-padded integer.
     int customer_number;
     string customer_name;
     int customer_order_quantity = 0;
     int date;
-    /* Keeps track of the latest invoice number. */
+    // Keeps track of the next invoice number to issue.
     static int invoice_number;
 
 public:

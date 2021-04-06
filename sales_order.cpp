@@ -1,11 +1,11 @@
 #include "sales_order.hpp"
 
-/* Checks that the input line is valid for a sales order. */
+// Checks that the input line is valid for a sales order.
 void validate_input_order(string input_line)
 {
     bool valid = true;
 
-    /* Sales order input line has a fixed length of 17 characters. */
+    // Sales order input line has a fixed length of 17 characters.
     if (input_line.length() != 17)
     {
         cerr << "An input line for a sales order should only contain 17 "
@@ -23,7 +23,7 @@ void validate_input_order(string input_line)
             valid = false;
         }
     }
-    /* Order type should be either 'N' or 'X'. */
+    // Order type should be either 'N' or 'X'.
     if (input_line[9] != 'N' && input_line[9] != 'X')
     {
         cerr << "Order type should be either 'N' or 'X'!" << endl;
@@ -52,7 +52,7 @@ void validate_input_order(string input_line)
         }
     }
 
-    /* Exits the program if the input file contains an invalid sales order. */
+    // Exits the program if the input file contains an invalid sales order.
     if (valid == false)
     {
         exit(EXIT_FAILURE);
@@ -62,7 +62,6 @@ void validate_input_order(string input_line)
 SalesOrder::SalesOrder(string input_line)
 {
     validate_input_order(input_line);
-
     /* Order date is contained on columns 2-9, order type is contained on
        column 10, order customer number is contained on columns 11-14, and
        order quantity is contained on columns 15-17. */
