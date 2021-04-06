@@ -3,8 +3,25 @@
 /* Sets the invoice number to start at 1000. */
 int Customer::invoice_number = 1000;
 
+/* Checks that the input line is valid for a new customer. */
+void validate_input_customer(string input_line)
+{
+    /* Customer number should be a number; checks that columns 2-5 only contain
+       digits. */
+    for (int i = 1; i <= 4; i++)
+    {
+        if (isdigit(input_line[i]) == 0)
+        {
+            cerr << "Customer number should only contain digits!" << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
 Customer::Customer(string input_line)
 {
+    validate_input_customer(input_line);
+
     /* Customer number is contained on columns 2-5, and customer name is
        contained on columns 6-45. */
     this->customer_number = atoi(input_line.substr(1, 4).c_str());
