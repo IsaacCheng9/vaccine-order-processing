@@ -6,6 +6,17 @@ int Customer::invoice_number = 1000;
 /* Checks that the input line is valid for a new customer. */
 void validate_input_customer(string input_line)
 {
+    bool valid = true;
+
+    /* New customer input line has a maximum length of 45 characters. */
+    if (input_line.length() > 45)
+    {
+        cerr << "An input line for a customer order should not contain more "
+                "45 characters!"
+             << endl;
+        valid = false;
+    }
+
     /* Customer number should be a number; checks that columns 2-5 only contain
        digits. */
     for (int i = 1; i <= 4; i++)
@@ -13,8 +24,14 @@ void validate_input_customer(string input_line)
         if (isdigit(input_line[i]) == 0)
         {
             cerr << "Customer number should only contain digits!" << endl;
-            exit(EXIT_FAILURE);
+            valid = false;
         }
+    }
+
+    /* Exits the program if the input file contains an invalid sales order. */
+    if (valid == false)
+    {
+        exit(EXIT_FAILURE);
     }
 }
 
