@@ -20,6 +20,7 @@ bool process_new_order(SalesOrder *new_sales_order,
     /* Whether the customer order must be shipped immediately or not. */
     bool is_express = false;
 
+    /* Checks all customers on record for a matching customer number. */
     for (Customer *customer : customer_record)
     {
         if (customer->get_customer_number() ==
@@ -53,9 +54,11 @@ bool process_new_order(SalesOrder *new_sales_order,
             {
                 customer->ship_order();
             }
+
             return true;
         }
     }
+
     /* Returns false when the customer number from the order doesn't match any
        customer number from the customer records. */
     return false;
@@ -105,7 +108,6 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
         else if (line[0] == 'S')
         {
             SalesOrder *new_sales_order = new SalesOrder(line);
-
             /* Throws an exception if the customer number cannot be matched. */
             if (!process_new_order(new_sales_order, customer_record))
             {
