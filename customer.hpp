@@ -7,6 +7,8 @@
 #include "sales_order.hpp"
 using namespace std;
 
+void validate_input_customer(string);
+
 class Customer
 {
     /* A four digit, zero-padded integer. */
