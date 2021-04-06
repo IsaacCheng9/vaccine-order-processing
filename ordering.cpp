@@ -12,10 +12,72 @@ void validate_parameters(int num_args)
     }
 }
 
+/* Reads the input file, and processes the instruction on each line. */
+void process_input_file(string file_name, set<Customer *> &customer_record)
+{
+    string line;
+    ifstream file;
+
+    /* Opens the input file, catching an error if it cannot open this. */
+    try
+    {
+        file.open(file_name);
+    }
+    catch (ifstream::failure e)
+    {
+        cerr << "Exception: " << e.what() << endl;
+    }
+
+    /* Gets each line in the file. */
+    while (getline(file, line))
+    {
+        if (line[0] == 'C')
+        {
+            process_customer_record(line, customer_record);
+        }
+        else if (line[0] == 'S')
+        {
+            process_sales_order(line, customer_record);
+        }
+        else if (line[0] == 'E')
+        {
+            process_end_of_day(line, customer_record);
+        }
+    }
+    file.close();
+}
+
+/* Creates a new customer and adds it to the record. */
+void process_customer_record(string line, set<Customer *> &customer_record)
+{
+    Customer *new_customer = new Customer(line);
+    customer_record.insert(new_customer);
+    cout << "OP: customer " << setfill('0') << setw(4)
+         << new_customer->get_customer_number() << " added" << endl;
+}
+
+/* Creates a new sales order and processes the information. */
+void process_sales_order(string line, set<Customer *> &customer_record)
+{
+    SalesOrder *new_sales_order = new SalesOrder(line);
+    /* Throws an exception if the customer number cannot be matched. */
+    if (!process_order_details(new_sales_order, customer_record))
+    {
+        cerr << "The customer number in the order does not match a "
+                "customer!"
+             << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    /* Free allocated memory for sales order, as it has been
+        processed. */
+    delete new_sales_order;
+}
+
 /* Records the date and quantity of a new order, and processes it if the
    customer number matches a customer on record. */
-bool process_new_order(SalesOrder *new_sales_order,
-                       set<Customer *> &customer_record)
+bool process_order_details(SalesOrder *new_sales_order,
+                           set<Customer *> &customer_record)
 {
     /* Whether the customer order must be shipped immediately or not. */
     bool is_express = false;
@@ -64,6 +126,15 @@ bool process_new_order(SalesOrder *new_sales_order,
     return false;
 }
 
+/* Ships pending customer orders from that day, as the day has ended. */
+void process_end_of_day(string line, set<Customer *> &customer_record)
+{
+    validate_input_end_of_day(line);
+    string end_of_day = line.substr(1, 8);
+    cout << "OP: end of day " << end_of_day << endl;
+    ship_pending_orders(customer_record);
+}
+
 /* Checks that the input line is valid for the end of the day. */
 void validate_input_end_of_day(string line)
 {
@@ -77,7 +148,6 @@ void validate_input_end_of_day(string line)
              << endl;
         valid = false;
     }
-
     /* End of date should be a number; checks that columns 1-8 only contain
        digits. */
     for (int i = 1; i <= 8; i++)
@@ -106,64 +176,6 @@ void ship_pending_orders(set<Customer *> &customer_record)
             customer->ship_order();
         }
     }
-}
-
-/* Reads the input file, and processes the instruction on each line. */
-void process_input_file(string file_name, set<Customer *> &customer_record)
-{
-    string line;
-    ifstream file;
-
-    /* Opens the input file, catching an error if it cannot open this. */
-    try
-    {
-        file.open(file_name);
-    }
-    catch (ifstream::failure e)
-    {
-        cerr << "Exception: " << e.what() << endl;
-    }
-
-    /* Gets each line in the file. */
-    while (getline(file, line))
-    {
-        /* Processes a new customer record. */
-        if (line[0] == 'C')
-        {
-            Customer *new_customer = new Customer(line);
-            customer_record.insert(new_customer);
-            cout << "OP: customer " << setfill('0') << setw(4)
-                 << new_customer->get_customer_number() << " added" << endl;
-        }
-
-        /* Processes a sales order. */
-        else if (line[0] == 'S')
-        {
-            SalesOrder *new_sales_order = new SalesOrder(line);
-            /* Throws an exception if the customer number cannot be matched. */
-            if (!process_new_order(new_sales_order, customer_record))
-            {
-                cerr << "The customer number in the order does not match a "
-                        "customer!"
-                     << endl;
-                exit(EXIT_FAILURE);
-            }
-
-            /* Free allocated memory for sales order, as it has been
-               processed. */
-            delete new_sales_order;
-        }
-
-        /* Ships pending customer orders from that day, as the day has ended. */
-        else if (line[0] == 'E')
-        {
-            validate_input_end_of_day(line);
-            string end_of_day = line.substr(1, 8);
-            cout << "OP: end of day " << end_of_day << endl;
-            ship_pending_orders(customer_record);
-        }
-    }
-    file.close();
 }
 
 /* Frees remaining allocated memory once the program has finished. */
