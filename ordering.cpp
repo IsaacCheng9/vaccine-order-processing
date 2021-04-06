@@ -64,6 +64,38 @@ bool process_new_order(SalesOrder *new_sales_order,
     return false;
 }
 
+/* Checks that the input line is valid for the end of the day. */
+void validate_input_end_of_day(string line)
+{
+    bool valid = true;
+
+    /* End of day input line has a fixed length of 9 characters. */
+    if (line.length() > 9)
+    {
+        cerr << "An input line for an end of day should only contain 9 "
+                "characters!"
+             << endl;
+        valid = false;
+    }
+
+    /* End of date should be a number; checks that columns 1-8 only contain
+       digits. */
+    for (int i = 1; i <= 8; i++)
+    {
+        if (isdigit(line[i]) == 0)
+        {
+            cerr << "End of date should only contain digits!" << endl;
+            valid = false;
+        }
+    }
+
+    /* Exits the program if the input file contains an invalid end of day. */
+    if (valid == false)
+    {
+        exit(EXIT_FAILURE);
+    }
+}
+
 /* Processes customers who have made a normal order at the end of the day. */
 void ship_pending_orders(set<Customer *> &customer_record)
 {
@@ -125,6 +157,7 @@ void process_input_file(string file_name, set<Customer *> &customer_record)
         /* Ships pending customer orders from that day, as the day has ended. */
         else if (line[0] == 'E')
         {
+            validate_input_end_of_day(line);
             string end_of_day = line.substr(1, 8);
             cout << "OP: end of day " << end_of_day << endl;
             ship_pending_orders(customer_record);
