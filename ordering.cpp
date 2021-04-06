@@ -6,7 +6,8 @@ void validate_parameters(int num_args)
     if (num_args != 2)
     {
         cerr << "There must only be one argument provided; the name of the "
-                "input file!" << endl;
+                "input file!"
+             << endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -44,7 +45,8 @@ bool process_new_order(SalesOrder *new_sales_order,
 
             cout << "OP: customer " << setfill('0') << setw(4)
                  << new_sales_order->get_order_customer_number() << ": "
-                 << order_type_name << " order: quantity " << new_sales_order->get_order_quantity() << endl;
+                 << order_type_name << " order: quantity "
+                 << new_sales_order->get_order_quantity() << endl;
 
             /* Express orders must be shipped immediately. */
             if (is_express)
@@ -108,7 +110,8 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
             if (!process_new_order(new_sales_order, customer_record))
             {
                 cerr << "The customer number in the order does not match a "
-                        "customer!" << endl;
+                        "customer!"
+                     << endl;
                 exit(EXIT_FAILURE);
             }
 
