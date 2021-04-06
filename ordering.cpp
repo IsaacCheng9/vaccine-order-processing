@@ -15,7 +15,7 @@ void validate_parameters(int num_args)
 /* Records the date and quantity of a new order, and processes it if the
    customer number matches a customer on record. */
 bool process_new_order(SalesOrder *new_sales_order,
-                       vector<Customer *> &customer_record)
+                       set<Customer *> &customer_record)
 {
     /* Whether the customer order must be shipped immediately or not. */
     bool is_express = false;
@@ -65,7 +65,7 @@ bool process_new_order(SalesOrder *new_sales_order,
 }
 
 /* Processes customers who have made a normal order at the end of the day. */
-void ship_pending_orders(vector<Customer *> &customer_record)
+void ship_pending_orders(set<Customer *> &customer_record)
 {
     for (Customer *customer : customer_record)
     {
@@ -77,7 +77,7 @@ void ship_pending_orders(vector<Customer *> &customer_record)
 }
 
 /* Reads the input file, and processes the instruction on each line. */
-void process_input_file(string file_name, vector<Customer *> &customer_record)
+void process_input_file(string file_name, set<Customer *> &customer_record)
 {
     string line;
     ifstream file;
@@ -99,7 +99,7 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
         if (line[0] == 'C')
         {
             Customer *new_customer = new Customer(line);
-            customer_record.push_back(new_customer);
+            customer_record.insert(new_customer);
             cout << "OP: customer " << setfill('0') << setw(4)
                  << new_customer->get_customer_number() << " added" << endl;
         }
@@ -134,7 +134,7 @@ void process_input_file(string file_name, vector<Customer *> &customer_record)
 }
 
 /* Frees remaining allocated memory once the program has finished. */
-void free_allocated_memory(vector<Customer *> &customer_record)
+void free_allocated_memory(set<Customer *> &customer_record)
 {
     for (Customer *customer : customer_record)
     {
@@ -145,7 +145,7 @@ void free_allocated_memory(vector<Customer *> &customer_record)
 int main(int argc, char **argv)
 {
     validate_parameters(argc);
-    vector<Customer *> customer_record;
+    set<Customer *> customer_record;
     process_input_file(argv[1], customer_record);
     free_allocated_memory(customer_record);
 
