@@ -6,6 +6,8 @@
 #include <string>
 using namespace std;
 
+void validate_input_customer(string);
+
 class SalesOrder
 {
     /* In the format YYYYMMDD. */
