@@ -43,6 +43,14 @@ void process_input_file(string file_name, set<Customer *> &customer_record)
         {
             process_end_of_day(line, customer_record);
         }
+        // Each input line must start with either 'C', 'S', or 'E'.
+        else
+        {
+            cerr << "This is not a valid input line! Each input line must "
+                    "start with either 'C', 'S', or 'E'!"
+                 << endl;
+            exit(EXIT_FAILURE);
+        }
     }
     file.close();
 }
