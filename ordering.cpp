@@ -12,7 +12,7 @@ void validate_parameters(int num_args)
     }
 }
 
-// Reads the input file, and processes the instruction on each line. */
+// Reads the input file, and processes the instruction on each line.
 void process_input_file(string file_name, set<Customer *> &customer_record)
 {
     string line;
@@ -55,7 +55,7 @@ void process_input_file(string file_name, set<Customer *> &customer_record)
     file.close();
 }
 
-// Creates a new customer and adds it to the record. */
+// Creates a new customer and adds it to the record.
 void process_customer_record(string line, set<Customer *> &customer_record)
 {
     Customer *new_customer = new Customer(line);
@@ -64,7 +64,7 @@ void process_customer_record(string line, set<Customer *> &customer_record)
          << new_customer->get_customer_number() << " added" << endl;
 }
 
-// Creates a new sales order and processes the information. */
+// Creates a new sales order and processes the information.
 void process_sales_order(string line, set<Customer *> &customer_record)
 {
     Order *new_sales_order = new Order(line);
@@ -81,8 +81,8 @@ void process_sales_order(string line, set<Customer *> &customer_record)
     delete new_sales_order;
 }
 
-/* Records the date and quantity of a new order, and processes it if the
-   customer number matches a customer on record. */
+// Records the date and quantity of a new order, and processes it if the
+// customer number matches a customer on record.
 bool process_order_details(Order *new_sales_order,
                            set<Customer *> &customer_record)
 {
@@ -95,13 +95,13 @@ bool process_order_details(Order *new_sales_order,
         if (customer->get_customer_number() ==
             new_sales_order->get_order_customer_number())
         {
-            /* Sets the date of the order, and adds the quantity to the pending
-               sales order of the customer. */
+            // Sets the date of the order, and adds the quantity to the pending
+            // sales order of the customer.
             customer->set_date(new_sales_order->get_order_date());
             customer->add_quantity(new_sales_order);
 
-            /* Finds out whether the order was a normal or express order
-               according to the mark on the input. */
+            // Finds out whether the order was a normal or express order
+            // according to the mark on the input.
             string order_type_name;
             if (new_sales_order->get_order_type() == 'N')
             {
@@ -128,12 +128,12 @@ bool process_order_details(Order *new_sales_order,
         }
     }
 
-    /* Returns false when the customer number from the order doesn't match any
-       customer number from the customer records. */
+    // Returns false when the customer number from the order doesn't match any
+    // customer number from the customer records.
     return false;
 }
 
-// Ships pending customer orders from that day, as the day has ended. */
+// Ships pending customer orders from that day, as the day has ended.
 void process_end_of_day(string line, set<Customer *> &customer_record)
 {
     validate_input_end_of_day(line);
@@ -142,7 +142,7 @@ void process_end_of_day(string line, set<Customer *> &customer_record)
     ship_pending_orders(customer_record);
 }
 
-// Checks that the input line is valid for the end of the day. */
+// Checks that the input line is valid for the end of the day.
 void validate_input_end_of_day(string line)
 {
     bool valid = true;
@@ -155,9 +155,9 @@ void validate_input_end_of_day(string line)
              << endl;
         valid = false;
     }
-    /* End of date should be a number; checks that columns 1-8 only contain
-       digits. */
-    for (int i = 1; i <= 8; i++)
+    // End of date should be a number; checks that columns 1-8 only contain
+    // digits.
+        for (int i = 1; i <= 8; i++)
     {
         if (isdigit(line[i]) == 0)
         {
@@ -173,7 +173,7 @@ void validate_input_end_of_day(string line)
     }
 }
 
-// Processes customers who have made a normal order at the end of the day. */
+// Processes customers who have made a normal order at the end of the day.
 void ship_pending_orders(set<Customer *> &customer_record)
 {
     // Iterates over customer records to check for unshipped customer orders.
@@ -186,7 +186,7 @@ void ship_pending_orders(set<Customer *> &customer_record)
     }
 }
 
-// Frees remaining memory allocated for each customer in the record. */
+// Frees remaining memory allocated for each customer in the record.
 void free_allocated_memory(set<Customer *> &customer_record)
 {
     for (Customer *customer : customer_record)

@@ -13,8 +13,8 @@ void validate_input_order(string input_line)
              << endl;
         valid = false;
     }
-    /* Order date should be a number; checks that columns 2-9 only contain
-       digits. */
+    // Order date should be a number; checks that columns 2-9 only contain
+    // digits.
     for (int i = 1; i <= 8; i++)
     {
         if (isdigit(input_line[i]) == 0)
@@ -29,8 +29,8 @@ void validate_input_order(string input_line)
         cerr << "Order type should be either 'N' or 'X'!" << endl;
         valid = false;
     }
-    /* Order customer number should be a number; checks that columns 11-14 only
-       contain digits. */
+    // Order customer number should be a number; checks that columns 11-14 only
+    // contain digits.
     for (int i = 10; i <= 13; i++)
     {
         if (isdigit(input_line[i]) == 0)
@@ -40,8 +40,8 @@ void validate_input_order(string input_line)
             valid = false;
         }
     }
-    /* Order quantity should be a number; checks that columns 15-17 only
-       contain digits. */
+    // Order quantity should be a number; checks that columns 15-17 only
+    // contain digits.
     for (int i = 14; i <= 16; i++)
     {
         if (isdigit(input_line[i]) == 0)
@@ -62,9 +62,9 @@ void validate_input_order(string input_line)
 Order::Order(string input_line)
 {
     validate_input_order(input_line);
-    /* Order date is contained on columns 2-9, order type is contained on
-       column 10, order customer number is contained on columns 11-14, and
-       order quantity is contained on columns 15-17. */
+    // Order date is contained on columns 2-9, order type is contained on
+    // column 10, order customer number is contained on columns 11-14, and
+    // order quantity is contained on columns 15-17.
     this->order_date = atoi(input_line.substr(1, 8).c_str());
     this->order_type = input_line[9];
     this->order_customer_number = atoi(input_line.substr(10, 4).c_str());
