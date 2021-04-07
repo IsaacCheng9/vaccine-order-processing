@@ -59,7 +59,7 @@ void Customer::ship_order()
 
 /* Adds the quantity of a new sales order to the customer's total pending
    order quantity. */
-void Customer::add_quantity(SalesOrder *new_sales_order)
+void Customer::add_quantity(Order *new_sales_order)
 {
     this->customer_order_quantity += new_sales_order->get_order_quantity();
 }

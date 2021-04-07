@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
-#include "sales_order.hpp"
+#include "order.hpp"
 using namespace std;
 
 void validate_input_customer(string);
@@ -22,7 +22,7 @@ class Customer
 public:
     Customer(string);
     void ship_order();
-    void add_quantity(SalesOrder *);
+    void add_quantity(Order *);
     int get_customer_number();
     int get_customer_order_quantity();
     void set_date(int);

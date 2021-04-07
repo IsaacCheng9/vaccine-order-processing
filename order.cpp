@@ -1,4 +1,4 @@
-#include "sales_order.hpp"
+#include "order.hpp"
 
 // Checks that the input line is valid for a sales order.
 void validate_input_order(string input_line)
@@ -59,7 +59,7 @@ void validate_input_order(string input_line)
     }
 }
 
-SalesOrder::SalesOrder(string input_line)
+Order::Order(string input_line)
 {
     validate_input_order(input_line);
     /* Order date is contained on columns 2-9, order type is contained on
@@ -71,22 +71,22 @@ SalesOrder::SalesOrder(string input_line)
     this->order_quantity = atoi(input_line.substr(14, 3).c_str());
 }
 
-int SalesOrder::get_order_date()
+int Order::get_order_date()
 {
     return this->order_date;
 }
 
-char SalesOrder::get_order_type()
+char Order::get_order_type()
 {
     return this->order_type;
 }
 
-int SalesOrder::get_order_customer_number()
+int Order::get_order_customer_number()
 {
     return this->order_customer_number;
 }
 
-int SalesOrder::get_order_quantity()
+int Order::get_order_quantity()
 {
     return this->order_quantity;
 }

@@ -59,7 +59,7 @@ void process_customer_record(string line, set<Customer *> &customer_record)
 // Creates a new sales order and processes the information. */
 void process_sales_order(string line, set<Customer *> &customer_record)
 {
-    SalesOrder *new_sales_order = new SalesOrder(line);
+    Order *new_sales_order = new Order(line);
     // Throws an exception if the customer number cannot be matched.
     if (!process_order_details(new_sales_order, customer_record))
     {
@@ -75,7 +75,7 @@ void process_sales_order(string line, set<Customer *> &customer_record)
 
 /* Records the date and quantity of a new order, and processes it if the
    customer number matches a customer on record. */
-bool process_order_details(SalesOrder *new_sales_order,
+bool process_order_details(Order *new_sales_order,
                            set<Customer *> &customer_record)
 {
     // Whether the customer order must be shipped immediately or not.

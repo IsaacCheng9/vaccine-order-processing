@@ -1,5 +1,5 @@
-#ifndef __SALES_ORDER_HPP
-#define __SALES_ORDER_HPP
+#ifndef __ORDER_HPP
+#define __ORDER_HPP
 
 #include <iomanip>
 #include <iostream>
@@ -8,7 +8,7 @@ using namespace std;
 
 void validate_input_customer(string);
 
-class SalesOrder
+class Order
 {
     // In the format YYYYMMDD.
     int order_date;
@@ -20,7 +20,7 @@ class SalesOrder
     int order_quantity;
 
 public:
-    SalesOrder(string);
+    Order(string);
     int get_order_date();
     char get_order_type();
     int get_order_customer_number();
