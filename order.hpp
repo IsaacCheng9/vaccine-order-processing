@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-void validate_input_customer(string);
+void ValidateInputOrder(string);
 
 class Order
 {

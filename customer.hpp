@@ -7,7 +7,7 @@
 #include "order.hpp"
 using namespace std;
 
-void validate_input_customer(string);
+void ValidateInputCustomer(string);
 
 class Customer
 {
@@ -21,8 +21,8 @@ class Customer
 
 public:
     Customer(string);
-    void ship_order();
-    void add_quantity(Order *);
+    void ShipOrder();
+    void AddQuantity(Order *);
     int get_customer_number();
     int get_customer_order_quantity();
     void set_date(int);

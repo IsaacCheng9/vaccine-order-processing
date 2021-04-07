@@ -1,7 +1,7 @@
 #include "order.hpp"
 
 // Checks that the input line is valid for a sales order.
-void validate_input_order(string input_line)
+void ValidateInputOrder(string input_line)
 {
     bool valid = true;
 
@@ -61,7 +61,7 @@ void validate_input_order(string input_line)
 
 Order::Order(string input_line)
 {
-    validate_input_order(input_line);
+    ValidateInputOrder(input_line);
     // Order date is contained on columns 2-9, order type is contained on
     // column 10, order customer number is contained on columns 11-14, and
     // order quantity is contained on columns 15-17.

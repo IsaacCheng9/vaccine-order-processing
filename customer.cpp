@@ -4,7 +4,7 @@
 int Customer::invoice_number = 1000;
 
 // Checks that the input line is valid for a new customer.
-void validate_input_customer(string input_line)
+void ValidateInputCustomer(string input_line)
 {
     bool valid = true;
 
@@ -36,7 +36,7 @@ void validate_input_customer(string input_line)
 
 Customer::Customer(string input_line)
 {
-    validate_input_customer(input_line);
+    ValidateInputCustomer(input_line);
     // Customer number is contained on columns 2-5, and customer name is
     // contained on columns 6-45.
     this->customer_number = atoi(input_line.substr(1, 4).c_str());
@@ -45,7 +45,7 @@ Customer::Customer(string input_line)
 
 // Ships the customer's order, and displays an invoice with the invoice number,
 // date, and quantity shipped.
-void Customer::ship_order()
+void Customer::ShipOrder()
 {
     cout << "OP: customer " << setfill('0') << setw(4) << customer_number
          << ": shipped quantity " << customer_order_quantity << endl;
@@ -59,7 +59,7 @@ void Customer::ship_order()
 
 // Adds the quantity of a new sales order to the customer's total pending
 // order quantity.
-void Customer::add_quantity(Order *new_sales_order)
+void Customer::AddQuantity(Order *new_sales_order)
 {
     this->customer_order_quantity += new_sales_order->get_order_quantity();
 }
