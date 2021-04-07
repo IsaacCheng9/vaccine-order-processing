@@ -5,8 +5,8 @@
 #include <iomanip>
 #include <set>
 #include <string>
-#include "customer.cpp"
-#include "order.cpp"
+#include "customer.hpp"
+#include "order.hpp"
 using namespace std;
 
 void ValidateParameters(int);
