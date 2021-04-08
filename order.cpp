@@ -51,7 +51,6 @@ void ValidateInputOrder(string input_line)
             valid = false;
         }
     }
-
     // Date must be valid.
     if (!IsValidDate(input_line))
     {
@@ -62,6 +61,7 @@ void ValidateInputOrder(string input_line)
     // Exits the program if the input file contains an invalid sales order.
     if (valid == false)
     {
+        cerr << "Error in input line containing: " << input_line << endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -69,6 +69,8 @@ void ValidateInputOrder(string input_line)
 // Checks whether the date is a valid.
 bool IsValidDate(string input_line)
 {
+    // Takes the year from columns 2-5, month from columns 6-7, and day
+    // from columns 8-9.
     int year = stoi(input_line.substr(1, 4));
     int month = stoi(input_line.substr(5, 2));
     int day = stoi(input_line.substr(7, 2));

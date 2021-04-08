@@ -30,6 +30,7 @@ void ValidateInputCustomer(string input_line)
     // Exits the program if the input file contains an invalid sales order.
     if (valid == false)
     {
+        cerr << "Error in input line containing: " << input_line << endl;
         exit(EXIT_FAILURE);
     }
 }

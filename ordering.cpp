@@ -15,7 +15,7 @@ void ValidateParameters(int num_args)
 // Reads the input file, and processes the instruction on each line.
 void ProcessInputFile(string file_name, set<Customer *> &customer_record)
 {
-    string line;
+    string input_line;
     ifstream file;
 
     // Opens the input file, catching an error if it cannot open this.
@@ -29,25 +29,26 @@ void ProcessInputFile(string file_name, set<Customer *> &customer_record)
     }
 
     // Gets each line in the file.
-    while (getline(file, line))
+    while (getline(file, input_line))
     {
-        if (line[0] == 'C')
+        if (input_line[0] == 'C')
         {
-            ProcessCustomerRecord(line, customer_record);
+            ProcessCustomerRecord(input_line, customer_record);
         }
-        else if (line[0] == 'S')
+        else if (input_line[0] == 'S')
         {
-            ProcessSalesOrder(line, customer_record);
+            ProcessSalesOrder(input_line, customer_record);
         }
-        else if (line[0] == 'E')
+        else if (input_line[0] == 'E')
         {
-            ProcessEndOfDay(line, customer_record);
+            ProcessEndOfDay(input_line, customer_record);
         }
         // Each input line must start with either 'C', 'S', or 'E'.
         else
         {
-            cerr << "This is not a valid input line! Each input line must "
-                    "start with either 'C', 'S', or 'E'!"
+            cerr << "The following input line is not valid - each input line "
+                    "must start with either 'C', 'S', or 'E':\n"
+                 << input_line
                  << endl;
             exit(EXIT_FAILURE);
         }
@@ -56,24 +57,24 @@ void ProcessInputFile(string file_name, set<Customer *> &customer_record)
 }
 
 // Creates a new customer and adds it to the record.
-void ProcessCustomerRecord(string line, set<Customer *> &customer_record)
+void ProcessCustomerRecord(string input_line, set<Customer *> &customer_record)
 {
-    Customer *new_customer = new Customer(line);
+    Customer *new_customer = new Customer(input_line);
     customer_record.insert(new_customer);
     cout << "OP: customer " << setfill('0') << setw(4)
          << new_customer->get_customer_number() << " added" << endl;
 }
 
 // Creates a new sales order and processes the information.
-void ProcessSalesOrder(string line, set<Customer *> &customer_record)
+void ProcessSalesOrder(string input_line, set<Customer *> &customer_record)
 {
-    Order *new_sales_order = new Order(line);
+    Order *new_sales_order = new Order(input_line);
     // Throws an exception if the customer number cannot be matched.
     if (!ProcessOrderDetails(new_sales_order, customer_record))
     {
-        cerr << "The customer number in the order does not match a "
-                "customer!"
-             << endl;
+        cerr << "The customer number in the following order does not match a "
+                "customer:\n"
+             << input_line << endl;
         exit(EXIT_FAILURE);
     }
 
@@ -84,7 +85,7 @@ void ProcessSalesOrder(string line, set<Customer *> &customer_record)
 // Records the date and quantity of a new order, and processes it if the
 // customer number matches a customer on record.
 bool ProcessOrderDetails(Order *new_sales_order,
-                           set<Customer *> &customer_record)
+                         set<Customer *> &customer_record)
 {
     // Whether the customer order must be shipped immediately or not.
     bool is_express = false;
@@ -134,21 +135,21 @@ bool ProcessOrderDetails(Order *new_sales_order,
 }
 
 // Ships pending customer orders from that day, as the day has ended.
-void ProcessEndOfDay(string line, set<Customer *> &customer_record)
+void ProcessEndOfDay(string input_line, set<Customer *> &customer_record)
 {
-    ValidateInputEndOfDay(line);
-    string end_of_day = line.substr(1, 8);
+    ValidateInputEndOfDay(input_line);
+    string end_of_day = input_line.substr(1, 8);
     cout << "OP: end of day " << end_of_day << endl;
     ShipPendingOrders(customer_record);
 }
 
 // Checks that the input line is valid for the end of the day.
-void ValidateInputEndOfDay(string line)
+void ValidateInputEndOfDay(string input_line)
 {
     bool valid = true;
 
     // End of day input line has a fixed length of 9 characters.
-    if (line.length() > 9)
+    if (input_line.length() > 9)
     {
         cerr << "An input line for an end of day should only contain 9 "
                 "characters!"
@@ -157,18 +158,25 @@ void ValidateInputEndOfDay(string line)
     }
     // End of date should be a number; checks that columns 1-8 only contain
     // digits.
-        for (int i = 1; i <= 8; i++)
+    for (int i = 1; i <= 8; i++)
     {
-        if (isdigit(line[i]) == 0)
+        if (isdigit(input_line[i]) == 0)
         {
             cerr << "End of date should only contain digits!" << endl;
             valid = false;
         }
     }
+    // Date must be valid.
+    if (!IsValidDate(input_line))
+    {
+        cerr << "This is not a valid date!" << endl;
+        valid = false;
+    }
 
     // Exits the program if the input file contains an invalid end of day.
     if (valid == false)
     {
+        cerr << "Error in input line containing: " << input_line << endl;
         exit(EXIT_FAILURE);
     }
 }
