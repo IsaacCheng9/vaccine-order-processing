@@ -7,6 +7,7 @@
 using namespace std;
 
 void ValidateInputOrder(string);
+bool IsValidDate(string);
 
 class Order
 {

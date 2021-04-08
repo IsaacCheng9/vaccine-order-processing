@@ -52,10 +52,60 @@ void ValidateInputOrder(string input_line)
         }
     }
 
+    // Date must be valid.
+    if (!IsValidDate(input_line))
+    {
+        cerr << "This is not a valid date!" << endl;
+        valid = false;
+    }
+
     // Exits the program if the input file contains an invalid sales order.
     if (valid == false)
     {
         exit(EXIT_FAILURE);
+    }
+}
+
+// Checks whether the date is a valid.
+bool IsValidDate(string input_line)
+{
+    int year = stoi(input_line.substr(1, 4));
+    int month = stoi(input_line.substr(5, 2));
+    int day = stoi(input_line.substr(7, 2));
+
+    // Only 12 months and at most 31 days in a month.
+    if (month < 1 || month > 12 || day < 1 || day > 31)
+    {
+        return false;
+    }
+
+    // A leap year is any year that can be divided by 4 but not 100, or a year
+    // that can be divided by 400. 
+    bool is_leap_year = ((year % 4 == 0) && (year % 100 != 0)) ||
+                        (year % 400 == 0);
+
+    // Checks dates in February based on whether it's a leap year. A leap year
+    // contains an extra day on the 29th.
+    if (month == 2)
+    {
+        if (is_leap_year)
+        {
+            return (day <= 29);
+        }
+        else
+        {
+            return (day <= 28);
+        }
+    }
+
+    // April, June, August, and November only contain 30 days.
+    if (month == 4 || month == 6 || month == 9 || month == 11)
+    {
+        return (day <= 30);
+    }
+    else
+    {
+        return true;
     }
 }
 
