@@ -39,7 +39,7 @@ Customer::Customer(string input_line)
     ValidateInputCustomer(input_line);
     // Customer number is contained on columns 2-5, and customer name is
     // contained on columns 6-45.
-    this->customer_number = atoi(input_line.substr(1, 4).c_str());
+    this->customer_number = stoi(input_line.substr(1, 4).c_str());
     this->customer_name = input_line.substr(5, 40);
 }
 

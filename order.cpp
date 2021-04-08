@@ -65,10 +65,10 @@ Order::Order(string input_line)
     // Order date is contained on columns 2-9, order type is contained on
     // column 10, order customer number is contained on columns 11-14, and
     // order quantity is contained on columns 15-17.
-    this->order_date = atoi(input_line.substr(1, 8).c_str());
+    this->order_date = stoi(input_line.substr(1, 8).c_str());
     this->order_type = input_line[9];
-    this->order_customer_number = atoi(input_line.substr(10, 4).c_str());
-    this->order_quantity = atoi(input_line.substr(14, 3).c_str());
+    this->order_customer_number = stoi(input_line.substr(10, 4).c_str());
+    this->order_quantity = stoi(input_line.substr(14, 3).c_str());
 }
 
 int Order::get_order_date()
