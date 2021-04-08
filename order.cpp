@@ -82,7 +82,7 @@ bool IsValidDate(string input_line)
     }
 
     // A leap year is any year that can be divided by 4 but not 100, or a year
-    // that can be divided by 400. 
+    // that can be divided by 400.
     bool is_leap_year = ((year % 4 == 0) && (year % 100 != 0)) ||
                         (year % 400 == 0);
 
