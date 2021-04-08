@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <iomanip>
+#include <iostream>
 #include <set>
 #include <string>
 #include "customer.hpp"
