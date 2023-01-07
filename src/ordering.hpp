@@ -16,7 +16,7 @@ void process_customer_record(string, set<customer *> &);
 void process_sales_order(string, set<customer *> &);
 bool process_order_details(order *, set<customer *> &);
 void process_end_of_day(string, set<customer *> &);
-void validate_input_end_of_day(string);
+void validate_end_of_day_input(string);
 void ship_pending_orders(set<customer *> &);
 void free_allocated_customer_memory(set<customer *> &);
 

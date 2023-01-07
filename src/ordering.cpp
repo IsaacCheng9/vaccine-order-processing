@@ -137,14 +137,14 @@ bool process_order_details(order *new_sales_order,
 // Ships pending customer orders from that day, as the day has ended.
 void process_end_of_day(string input_line, set<customer *> &customer_record)
 {
-    validate_input_end_of_day(input_line);
+    validate_end_of_day_input(input_line);
     string end_of_day = input_line.substr(1, 8);
     cout << "OP: end of day " << end_of_day << endl;
     ship_pending_orders(customer_record);
 }
 
 // Checks that the input line is valid for the end of the day.
-void validate_input_end_of_day(string input_line)
+void validate_end_of_day_input(string input_line)
 {
     bool valid = true;
 
