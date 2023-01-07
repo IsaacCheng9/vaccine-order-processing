@@ -1,10 +1,10 @@
 #include "customer.hpp"
 
 // Sets the invoice number to start at 1000.
-int Customer::invoice_number = 1000;
+int customer::invoice_number = 1000;
 
 // Checks that the input line is valid for a new customer.
-void ValidateInputCustomer(string input_line)
+void validate_customer_input(string input_line)
 {
     bool valid = true;
 
@@ -35,9 +35,9 @@ void ValidateInputCustomer(string input_line)
     }
 }
 
-Customer::Customer(string input_line)
+customer::customer(string input_line)
 {
-    ValidateInputCustomer(input_line);
+    validate_customer_input(input_line);
     // Customer number is contained on columns 2-5, and customer name is
     // contained on columns 6-45.
     this->customer_number = stoi(input_line.substr(1, 4).c_str());
@@ -46,7 +46,7 @@ Customer::Customer(string input_line)
 
 // Ships the customer's order, and displays an invoice with the invoice number,
 // date, and quantity shipped.
-void Customer::ShipOrder()
+void customer::ship_order()
 {
     cout << "OP: customer " << setfill('0') << setw(4) << customer_number
          << ": shipped quantity " << customer_order_quantity << endl;
@@ -60,22 +60,22 @@ void Customer::ShipOrder()
 
 // Adds the quantity of a new sales order to the customer's total pending
 // order quantity.
-void Customer::AddQuantity(Order *new_sales_order)
+void customer::add_quantity(order *new_sales_order)
 {
     this->customer_order_quantity += new_sales_order->get_order_quantity();
 }
 
-int Customer::get_customer_number()
+int customer::get_customer_number()
 {
     return this->customer_number;
 }
 
-int Customer::get_customer_order_quantity()
+int customer::get_customer_order_quantity()
 {
     return this->customer_order_quantity;
 }
 
-void Customer::set_date(int date)
+void customer::set_date(int date)
 {
     this->date = date;
 }

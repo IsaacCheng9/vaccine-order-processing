@@ -7,9 +7,9 @@
 #include "order.hpp"
 using namespace std;
 
-void ValidateInputCustomer(string);
+void validate_customer_input(string);
 
-class Customer
+class customer
 {
     // A four digit, zero-padded integer.
     int customer_number;
@@ -20,9 +20,9 @@ class Customer
     static int invoice_number;
 
 public:
-    Customer(string);
-    void ShipOrder();
-    void AddQuantity(Order *);
+    customer(string);
+    void ship_order();
+    void add_quantity(order *);
     int get_customer_number();
     int get_customer_order_quantity();
     void set_date(int);

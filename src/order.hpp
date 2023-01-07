@@ -6,10 +6,10 @@
 #include <string>
 using namespace std;
 
-void ValidateInputOrder(string);
-bool IsValidDate(string);
+void validate_order_input(string);
+bool is_valid_date(string);
 
-class Order
+class order
 {
     // In the format YYYYMMDD.
     int order_date;
@@ -21,7 +21,7 @@ class Order
     int order_quantity;
 
 public:
-    Order(string);
+    order(string);
     int get_order_date();
     char get_order_type();
     int get_order_customer_number();

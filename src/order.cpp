@@ -1,7 +1,7 @@
 #include "order.hpp"
 
 // Checks that the input line is valid for a sales order.
-void ValidateInputOrder(string input_line)
+void validate_order_input(string input_line)
 {
     bool valid = true;
 
@@ -52,7 +52,7 @@ void ValidateInputOrder(string input_line)
         }
     }
     // Date must be valid.
-    if (!IsValidDate(input_line))
+    if (!is_valid_date(input_line))
     {
         cerr << "This is not a valid date!" << endl;
         valid = false;
@@ -67,7 +67,7 @@ void ValidateInputOrder(string input_line)
 }
 
 // Checks whether the date is a valid.
-bool IsValidDate(string input_line)
+bool is_valid_date(string input_line)
 {
     // Takes the year from columns 2-5, month from columns 6-7, and day
     // from columns 8-9.
@@ -111,9 +111,9 @@ bool IsValidDate(string input_line)
     }
 }
 
-Order::Order(string input_line)
+order::order(string input_line)
 {
-    ValidateInputOrder(input_line);
+    validate_order_input(input_line);
     // Order date is contained on columns 2-9, order type is contained on
     // column 10, order customer number is contained on columns 11-14, and
     // order quantity is contained on columns 15-17.
@@ -123,22 +123,22 @@ Order::Order(string input_line)
     this->order_quantity = stoi(input_line.substr(14, 3).c_str());
 }
 
-int Order::get_order_date()
+int order::get_order_date()
 {
     return this->order_date;
 }
 
-char Order::get_order_type()
+char order::get_order_type()
 {
     return this->order_type;
 }
 
-int Order::get_order_customer_number()
+int order::get_order_customer_number()
 {
     return this->order_customer_number;
 }
 
-int Order::get_order_quantity()
+int order::get_order_quantity()
 {
     return this->order_quantity;
 }

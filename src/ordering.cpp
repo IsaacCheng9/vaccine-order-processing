@@ -1,7 +1,7 @@
 #include "ordering.hpp"
 
 // Checks that only one argument has been provided; the input file.
-void ValidateParameters(int num_args)
+void validate_parameters(int num_args)
 {
     if (num_args != 2)
     {
@@ -13,7 +13,7 @@ void ValidateParameters(int num_args)
 }
 
 // Reads the input file, and processes the instruction on each line.
-void ProcessInputFile(string file_name, set<Customer *> &customer_record)
+void process_input_file(string file_name, set<customer *> &customer_record)
 {
     string input_line;
     ifstream file;
@@ -33,15 +33,15 @@ void ProcessInputFile(string file_name, set<Customer *> &customer_record)
     {
         if (input_line[0] == 'C')
         {
-            ProcessCustomerRecord(input_line, customer_record);
+            process_customer_record(input_line, customer_record);
         }
         else if (input_line[0] == 'S')
         {
-            ProcessSalesOrder(input_line, customer_record);
+            process_sales_order(input_line, customer_record);
         }
         else if (input_line[0] == 'E')
         {
-            ProcessEndOfDay(input_line, customer_record);
+            process_end_of_day(input_line, customer_record);
         }
         // Each input line must start with either 'C', 'S', or 'E'.
         else
@@ -57,20 +57,20 @@ void ProcessInputFile(string file_name, set<Customer *> &customer_record)
 }
 
 // Creates a new customer and adds it to the record.
-void ProcessCustomerRecord(string input_line, set<Customer *> &customer_record)
+void process_customer_record(string input_line, set<customer *> &customer_record)
 {
-    Customer *new_customer = new Customer(input_line);
+    customer *new_customer = new customer(input_line);
     customer_record.insert(new_customer);
     cout << "OP: customer " << setfill('0') << setw(4)
          << new_customer->get_customer_number() << " added" << endl;
 }
 
 // Creates a new sales order and processes the information.
-void ProcessSalesOrder(string input_line, set<Customer *> &customer_record)
+void process_sales_order(string input_line, set<customer *> &customer_record)
 {
-    Order *new_sales_order = new Order(input_line);
+    order *new_sales_order = new order(input_line);
     // Throws an exception if the customer number cannot be matched.
-    if (!ProcessOrderDetails(new_sales_order, customer_record))
+    if (!process_order_details(new_sales_order, customer_record))
     {
         cerr << "The customer number in the following order does not match a "
                 "customer:\n"
@@ -84,14 +84,14 @@ void ProcessSalesOrder(string input_line, set<Customer *> &customer_record)
 
 // Records the date and quantity of a new order, and processes it if the
 // customer number matches a customer on record.
-bool ProcessOrderDetails(Order *new_sales_order,
-                         set<Customer *> &customer_record)
+bool process_order_details(order *new_sales_order,
+                         set<customer *> &customer_record)
 {
     // Whether the customer order must be shipped immediately or not.
     bool is_express = false;
 
     // Checks all customers on record for a matching customer number.
-    for (Customer *customer : customer_record)
+    for (customer *customer : customer_record)
     {
         if (customer->get_customer_number() ==
             new_sales_order->get_order_customer_number())
@@ -99,7 +99,7 @@ bool ProcessOrderDetails(Order *new_sales_order,
             // Sets the date of the order, and adds the quantity to the pending
             // sales order of the customer.
             customer->set_date(new_sales_order->get_order_date());
-            customer->AddQuantity(new_sales_order);
+            customer->add_quantity(new_sales_order);
 
             // Finds out whether the order was a normal or express order
             // according to the mark on the input.
@@ -122,7 +122,7 @@ bool ProcessOrderDetails(Order *new_sales_order,
             // Express orders must be shipped immediately.
             if (is_express)
             {
-                customer->ShipOrder();
+                customer->ship_order();
             }
 
             return true;
@@ -135,16 +135,16 @@ bool ProcessOrderDetails(Order *new_sales_order,
 }
 
 // Ships pending customer orders from that day, as the day has ended.
-void ProcessEndOfDay(string input_line, set<Customer *> &customer_record)
+void process_end_of_day(string input_line, set<customer *> &customer_record)
 {
-    ValidateInputEndOfDay(input_line);
+    validate_input_end_of_day(input_line);
     string end_of_day = input_line.substr(1, 8);
     cout << "OP: end of day " << end_of_day << endl;
-    ShipPendingOrders(customer_record);
+    ship_pending_orders(customer_record);
 }
 
 // Checks that the input line is valid for the end of the day.
-void ValidateInputEndOfDay(string input_line)
+void validate_input_end_of_day(string input_line)
 {
     bool valid = true;
 
@@ -167,7 +167,7 @@ void ValidateInputEndOfDay(string input_line)
         }
     }
     // Date must be valid.
-    if (!IsValidDate(input_line))
+    if (!is_valid_date(input_line))
     {
         cerr << "This is not a valid date!" << endl;
         valid = false;
@@ -182,22 +182,22 @@ void ValidateInputEndOfDay(string input_line)
 }
 
 // Processes customers who have made a normal order at the end of the day.
-void ShipPendingOrders(set<Customer *> &customer_record)
+void ship_pending_orders(set<customer *> &customer_record)
 {
     // Iterates over customer records to check for unshipped customer orders.
-    for (Customer *customer : customer_record)
+    for (customer *customer : customer_record)
     {
         if (customer->get_customer_order_quantity() > 0)
         {
-            customer->ShipOrder();
+            customer->ship_order();
         }
     }
 }
 
 // Frees remaining memory allocated for each customer in the record.
-void FreeAllocatedMemory(set<Customer *> &customer_record)
+void free_allocated_customer_memory(set<customer *> &customer_record)
 {
-    for (Customer *customer : customer_record)
+    for (customer *customer : customer_record)
     {
         delete customer;
     }
@@ -205,9 +205,9 @@ void FreeAllocatedMemory(set<Customer *> &customer_record)
 
 int main(int argc, char **argv)
 {
-    ValidateParameters(argc);
-    set<Customer *> customer_record;
-    ProcessInputFile(argv[1], customer_record);
-    FreeAllocatedMemory(customer_record);
+    validate_parameters(argc);
+    set<customer *> customer_record;
+    process_input_file(argv[1], customer_record);
+    free_allocated_customer_memory(customer_record);
     return EXIT_SUCCESS;
 }
