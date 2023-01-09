@@ -16,7 +16,8 @@ directory:
 
 ## Usage
 
-Once you have compiled the program, you can run it on an input file with the following command:
+Once you have compiled the program, you can run it on an input file with the
+following command in the root directory:
 
 `./build/vaccine_order_processing <input_file>`, where `<input_file>` is the
 path to the input file.
@@ -25,7 +26,8 @@ path to the input file.
 
 We have included an example input file in: [/resources/order_file.txt](resources/order_file.txt)
 
-To run the program on the example file, run the following command in the root directory:
+To run the program on the example file, run the following command in the root
+directory:
 
 `./build/vaccine_order_processing resources/order_file.txt`
 
