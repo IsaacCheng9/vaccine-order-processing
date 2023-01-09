@@ -30,7 +30,24 @@
 *.exe
 *.out
 *.app
+
+# VS Code config files
 .vscode/launch.json
 .vscode/tasks.json
 .vscode/settings.json
+
+# Documentation editor files
 *.docx
+
+# CMkae files
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
