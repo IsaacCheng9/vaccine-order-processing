@@ -3,6 +3,9 @@
 A command-line tool to process customer orders of COVID-19 vaccines for a
 shipping company, developed with C++11.
 
+For more information about the design and implementation of the program, see
+the design document at: [/docs/Design Document - Vaccine Order Processing.pdf](docs/Design%20Document%20-%20Vaccine%20Order%20Processing.pdf)
+
 ## Building with CMake
 
 To build the program using CMake, run the following commands in the root
